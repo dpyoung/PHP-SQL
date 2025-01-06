@@ -11,12 +11,10 @@ class NetworkNode{
 	
 	/********************************************************************************
 	*	
-    *       Description:	Constructor
-	*		Pre:			ODBC connection to EMP Exists with specified credentials
-	*		Post:			EmpowerConnection object populated with Email, Name, Act.Codes
-	*		Return:			1 on connection failure,
-	*						2 on Query error,
-	*						0 on Success.
+    	*       Description:			Constructor
+	*		Pre:			ODBC connection Exists with specified credentials
+	*		Post:			NetworkNode object created with appropriate attributes
+	*		Return:			N/A
 	*		TODO:			Combine SQL queries into one for efficiency/speed.
 	********************************************************************************/
 	public function __construct($entry_id, $net_add, $mac_add, $up_down, $up_time, $attributes){
