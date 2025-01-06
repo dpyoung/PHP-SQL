@@ -7,7 +7,15 @@ require_once($_SERVER["DOCUMENT_ROOT"] . "/nm_includes/Class_NetworkNode.php");
 class NodeKeeper{
 	private static $nodes = array();
 	private static $pdo;
-	
+	/********************************************************************************
+	*	
+    	*       Description:			populate_nodes, to fetch all stored network locations
+	*		Pre:			ODBC connection configuration defined in /nm_includes/db_vars.php
+ 	*					This is linked via /nm_includes/Class_NetworkNode.php
+	*		Post:			NetworkNode objects array is created
+	*		Return:			N/A
+	*		TODO:			
+	********************************************************************************/
 	function populate_nodes(){
 		try {
 			//$mysql_connection = new PDO("sqlsrv:Server=localhost;Database=testdb", "UserName", "Password");
@@ -24,6 +32,14 @@ class NodeKeeper{
 		}
 	}
 	
+	/********************************************************************************
+	*	
+    	*       Description:			render_nodes, to render all fetched network locations
+	*		Pre:			object's $nodes array is populated via populate_nodes()
+	*		Post:			NetworkNode objects array is rendered in DIV elements
+	*		Return:			N/A
+	*		TODO:			
+	********************************************************************************/	
 	function render_nodes(){
 		foreach(self::$nodes as $node){
 			$hosthash = md5($node->getEntryID());
@@ -73,6 +89,14 @@ class NodeKeeper{
 		}
 	}
 	
+	/********************************************************************************
+	*	
+    	*       Description:			getNodes
+	*		Pre:			object is instantiated
+	*		Post:			NetworkNode objects array is returned
+	*		Return:			$array of type <NetworkNode>
+	*		TODO:			
+	********************************************************************************/		
 	function getNodes(){
 		return self::$nodes;
 	}
