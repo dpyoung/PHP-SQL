@@ -8,6 +8,14 @@ class NetworkPinger{
 	private $nodes = array();
 	private static $pdo;
 	
+	/********************************************************************************
+	*	
+    	*       Description:			populate_nodes
+	*		Pre:			ODBC connection details defined in db_vars.php
+	*		Post:			list of nodes is added to $nodes array.
+	*		Return:			N/A
+	*		TODO:			
+	********************************************************************************/	
 	function populate_nodes(){
 		try {
 			//$mysql_connection = new PDO("sqlsrv:Server=localhost;Database=testdb", "UserName", "Password");
@@ -22,7 +30,15 @@ class NetworkPinger{
 			echo "Connection failed: " . $e->getMessage();
 		}
 	}
-	
+
+	/********************************************************************************
+	*	
+    	*       Description:			ping_my_server
+	*		Pre:			host address on $nodes[i] exists
+	*		Post:			host up status is updated in DB.
+	*		Return:			N/A
+	*		TODO:			Take an average of response times instead of just the first.
+	********************************************************************************/	
 	function ping_my_server($hostaddress){
 		$response = shell_exec("ping " . $hostaddress . " -n 1");
 		$stmt = self::$pdo->prepare("UPDATE nodes SET up_down = :isUpValue WHERE net_add = :isIPValue;"); 
@@ -39,12 +55,24 @@ class NetworkPinger{
 			$stmt->execute();
 		}
 	}
-	
+
+	/********************************************************************************
+	*	
+    	*       Description:			getNodes
+	*		Pre:			$nodes exists
+	*		Post:			$nodes returned
+	*		Return:			$this->nodes
+	*		TODO:			
+	********************************************************************************/	
 	function getNodes(){
 		return $this->nodes;
 	}
 }
 
+/********************************************************************************
+ *	Perform the ping operation. 
+ *	TODO: This should be extracted and performed in parallel per-node instead of sequentially.
+********************************************************************************/
 $myPinger = new NetworkPinger();
 $myPinger->populate_nodes();
 foreach($myPinger->getNodes() as $node){
