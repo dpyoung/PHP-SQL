@@ -27,6 +27,7 @@ function nm_update_view_complete(){
 
 /*
 *	Status Bar Update + Viewer Update. Refreshes middle of page; may annoy users with drop-downs open!!!
+*	TODO: add a sort of "prevent default" for those with open editors.
 */
 function move() {
 	var elem = document.getElementById("myBar");   
@@ -167,7 +168,9 @@ $(document).on("click", '.submitanode', function(event) {
 
 
 /*
-FRUSTRATING SHIT
+ *	CLICK .expandanode	
+ *	
+ *		This should expand details of a node with fade in effects.
 */
 $(document).on("click", '.expandanode', function(event) { 
 	event.preventDefault();
